@@ -96,8 +96,8 @@ const allAnnotations = [
                 title: "Title 1"
             },
             // Direct x and y coordinates
-            x: x(parseDate("2020YQ1")), // X-coordinate
-            y: y(58600000),             // Y-coordinate
+            x: x(640), // X-coordinate
+            y: y(295),             // Y-coordinate
             className: "show-bg",
             dy: -30,                    // Adjust the vertical offset as needed
             dx: 0                       // Adjust the horizontal offset as needed
@@ -109,21 +109,21 @@ const allAnnotations = [
                 bgPadding: 10,
                 title: "Title 2"
             },
-            x: x(parseDate("2020YQ2")), // X-coordinate
-            y: y(54200000),             // Y-coordinate
+            x: x(425), // X-coordinate
+            y: y(240),             // Y-coordinate
             className: "show-bg",
             dy: -30,                    // Adjust the vertical offset as needed
             dx: 0                       // Adjust the horizontal offset as needed
         },
-        
+
         {
             note: {
                 label: "Annotation 3",
                 bgPadding: 10,
                 title: "Title 3"
             },
-            x: x(parseDate("2020YQ3")), // X-coordinate
-            y: y(80400000),             // Y-coordinate
+            x: x(710), // X-coordinate
+            y: y(330),             // Y-coordinate
             className: "show-bg",
             dy: -30,                    // Adjust the vertical offset as needed
             dx: 0                       // Adjust the horizontal offset as needed
@@ -278,7 +278,7 @@ function updateChart(index) {
     // Add annotations
     svg.selectAll(".annotation-group").remove(); // Clear previous annotations
 
-    const toadd_Annotation = allAnnotations[1]; // Example annotation
+    const toadd_Annotation = allAnnotations[currentBrandIndex]; // Example annotation
 
     const makeAnnotations = d3.annotation()
         .type(d3.annotationLabel)
