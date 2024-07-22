@@ -141,7 +141,9 @@ function updateChart(index) {
         .attr("d", line)
         .style("stroke", color(brand.id));
 
-    // Add the dot
+    // Add points
+    const points = brand.values.map(d => [x(d.date), y(d.value)]);
+
     svg.selectAll(".dot")
         .data(brand.values)
         .enter().append("circle")
@@ -151,10 +153,28 @@ function updateChart(index) {
         .attr("cy", d => y(d.value))
         .style("fill", color(brand.id))
         .style("stroke", "black")
-        .style("stroke-width", 1)
+        .style("stroke-width", 1);
+
+    // Create Voronoi diagram
+    const voronoi = d3.voronoi()
+        .x(d => x(d.date))
+        .y(d => y(d.value))
+        .extent([[0, 0], [width, height]]);
+
+    const cells = voronoi(brand.values);
+
+    // Add Voronoi cells
+    svg.selectAll(".voronoi")
+        .data(cells.polygons())
+        .enter().append("path")
+        .attr("class", "voronoi")
+        .attr("d", d => `M${d.join("L")}Z`)
+        .style("fill", "none")
+        .style("pointer-events", "all")
         .on("mouseover", function(event, d) {
+            const dataPoint = d.data;
             tooltip.transition().duration(200).style("opacity", .9);
-            tooltip.html(`Date: ${d.date.toLocaleDateString()}<br>Value: ${(d.value / 1000000).toFixed(2)}M`)
+            tooltip.html(`Date: ${dataPoint.date.toLocaleDateString()}<br>Value: ${(dataPoint.value / 1000000).toFixed(2)}M`)
                 .style("left", (event.pageX + 5) + "px")
                 .style("top", (event.pageY - 28) + "px");
         })
@@ -164,7 +184,7 @@ function updateChart(index) {
 
     // Add the brand label
     svg.append("text")
-        .attr("transform", "translate(" + (width - 60) + "," + y(brand.values[brand.values.length - 1].value) + ")")
+        .attr("transform", "translate(" + (width) + "," + y(brand.values[brand.values.length - 1].value) + ")")
         .attr("x", 5)
         .attr("dy", ".35em")
         .style("font", "16px sans-serif")
