@@ -18,17 +18,17 @@
     </style>
 </head>
 <body>
-    <div>test2</div>
+    <div>Smartphone Shipments 2018-2020</div>
     <div class="button-container">
         <button id="prev">Previous</button>
-        <button id="1">1</button>
-        <button id="2">2</button>
-        <button id="3">3</button>
-        <button id="4">4</button>
-        <button id="5">5</button>
-        <button id="6">6</button>
-        <button id="7">7</button>
-        <button id="all">ALL</button>
+        <button id="0">1</button>
+        <button id="1">2</button>
+        <button id="2">3</button>
+        <button id="3">4</button>
+        <button id="4">5</button>
+        <button id="5">6</button>
+        <button id="6">7</button>
+        <button id="7">ALL</button>
         <button id="next">Next</button>
     </div>
     <div id="chart"></div>
@@ -113,18 +113,18 @@ d3.csv("sales.csv").then(data => {
 
     // Add event listeners for buttons
     d3.select("#prev").on("click", () => {
-        currentBrandIndex = (currentBrandIndex - 1 + brands.length) % brands.length;
+        currentBrandIndex = (currentBrandIndex + brands.length) % (brands.length+1);
         if(currentBrandIndex = 7) {
-            console.log(1)
+            updateChartall();
         } else {
             updateChart(currentBrandIndex);
         }
     });
 
     d3.select("#next").on("click", () => {
-        currentBrandIndex = (currentBrandIndex + 1) % brands.length;
+        currentBrandIndex = (currentBrandIndex + 2) % (brands.length+1);
         if(currentBrandIndex = 7) {
-            console.log(1)
+            updateChartall();
         } else {
             updateChart(currentBrandIndex);
         }
