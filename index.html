@@ -31,7 +31,7 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
 // Define the dimensions of the SVG container
-const margin = { top: 20, right: 20, bottom: 30, left: 50 },
+const margin = { top: 20, right: 20, bottom: 30, left: 200 },
       width = 960 - margin.left - margin.right,
       height = 500 - margin.top - margin.bottom;
 
@@ -115,11 +115,6 @@ function updateChart(index) {
     svg.selectAll("*").remove();  // Clear the SVG
 
     const brand = brands[index];
-
-    y.domain([
-        d3.min(brand.values, d => d.value),
-        d3.max(brand.values, d => d.value)
-    ]);
 
     // Add the X Axis
     svg.append("g")
