@@ -31,7 +31,7 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
 // Define the dimensions of the SVG container
-const margin = { top: 20, right: 20, bottom: 30, left: 50},
+const margin = { top: 20, right: 200, bottom: 30, left: 50},
       width = 960 - margin.left - margin.right,
       height = 500 - margin.top - margin.bottom;
 
@@ -146,7 +146,7 @@ function updateChart(index) {
         .data(brand.values)
         .enter().append("circle")
         .attr("class", "dot")
-        .attr("r", 4)
+        .attr("r", 10)
         .attr("cx", d => x(d.date))
         .attr("cy", d => y(d.value))
         .style("fill", color(brand.id))
@@ -202,7 +202,7 @@ function updateChart2(index) {
         .data(brand.values)
         .enter().append("circle")
         .attr("class", "dot")
-        .attr("r", 4)
+        .attr("r", 10)
         .attr("cx", d => x(d.date))
         .attr("cy", d => y(d.value))
         .style("fill", color(brand.id))
