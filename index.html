@@ -114,12 +114,20 @@ d3.csv("sales.csv").then(data => {
     // Add event listeners for buttons
     d3.select("#prev").on("click", () => {
         currentBrandIndex = (currentBrandIndex - 1 + brands.length) % brands.length;
-        updateChart(currentBrandIndex);
+        if(currentBrandIndex = 7) {
+            console.log(1)
+        } else {
+            updateChart(currentBrandIndex);
+        }
     });
 
     d3.select("#next").on("click", () => {
         currentBrandIndex = (currentBrandIndex + 1) % brands.length;
-        updateChart(currentBrandIndex);
+        if(currentBrandIndex = 7) {
+            console.log(1)
+        } else {
+            updateChart(currentBrandIndex);
+        }
     });
 });
 
