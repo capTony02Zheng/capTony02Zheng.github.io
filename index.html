@@ -21,6 +21,14 @@
     <div>test2</div>
     <div class="button-container">
         <button id="prev">Previous</button>
+        <button id="1">1</button>
+        <button id="2">2</button>
+        <button id="3">3</button>
+        <button id="4">4</button>
+        <button id="5">5</button>
+        <button id="6">6</button>
+        <button id="7">7</button>
+        <button id="all">ALL</button>
         <button id="next">Next</button>
     </div>
     <div id="chart"></div>
@@ -47,7 +55,7 @@ const tooltip = d3.select("body").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
 
-// Custom date parser for the format 2018YQ1
+// Custom date parser
 const parseDate = d => {
     const year = +d.substring(0, 4);
     const quarter = +d.substring(6, 7);
@@ -146,7 +154,7 @@ function updateChart(index) {
         .data(brand.values)
         .enter().append("circle")
         .attr("class", "dot")
-        .attr("r", 10)
+        .attr("r", 6)
         .attr("cx", d => x(d.date))
         .attr("cy", d => y(d.value))
         .style("fill", color(brand.id))
@@ -172,10 +180,11 @@ function updateChart(index) {
         .text(brand.id);
 }
 
-function updateChart2(index) {
+function updateChartall() {
     svg.selectAll("*").remove();  // Clear the SVG
 
-    const brand = brands[index];
+    for (let i = 0; i < 10; i++) {
+        brand = brands[i];
 
     // Add the X Axis
     svg.append("g")
@@ -202,7 +211,7 @@ function updateChart2(index) {
         .data(brand.values)
         .enter().append("circle")
         .attr("class", "dot")
-        .attr("r", 10)
+        .attr("r", 6)
         .attr("cx", d => x(d.date))
         .attr("cy", d => y(d.value))
         .style("fill", color(brand.id))
@@ -226,6 +235,7 @@ function updateChart2(index) {
         .style("font", "16px sans-serif")
         .style("fill", color(brand.id))
         .text(brand.id);
+    }
 }
 
 
