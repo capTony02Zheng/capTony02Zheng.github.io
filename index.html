@@ -44,28 +44,11 @@
 // d3 annotationLabel usage
 const type = d3.annotationLabel;
 
-const annotations = [{
-    note: {
-        label: "Notable drop in Q2 2020",
-        bgPadding: 10,
-        title: "April 2020 Drop"
-    },
-    data: { date: new Date("2020-04-01"), value: 54200000 },
-    className: "show-bg",
-    dy: -50,  // Move annotation up
-    dx: 0     // No horizontal offset
-    },
-    {
-    note: {
-        label: "test",
-        bgPadding: 10,
-        title: "April 2020 Drop"
-    },
-    data: { date: new Date("2020-04-01"), value: 54200000 },
-    className: "show-bg",
-    dy: -50,  // Move annotation up
-    dx: 0     // No horizontal offset
-    },
+const allAnnotations = [
+    { note: { label: "Annotation 1", bgPadding: 10, title: "Title 1" }, data: { date: new Date("2020-01-01"), value: 58600000 }, className: "show-bg", dy: 40, dx: 0 },
+    { note: { label: "Annotation 2", bgPadding: 10, title: "Title 2" }, data: { date: new Date("2020-04-01"), value: 54200000 }, className: "show-bg", dy: 40, dx: 0 },
+    { note: { label: "Annotation 3", bgPadding: 10, title: "Title 3" }, data: { date: new Date("2020-07-01"), value: 80400000 }, className: "show-bg", dy: 40, dx: 0 }
+    // Add more annotations as needed
 ];
 
 // Define the dimensions of the SVG container
@@ -255,9 +238,13 @@ function updateChart(index) {
         .text(brand.id);
 
     // Add annotations
+    // Extract the third annotation (index 2)
+    const toadd_Annotation = allAnnotations[2];
+
+    // Create and add the third annotation
     const makeAnnotations = d3.annotation()
-        .type(type)
-        .annotations(annotations[1]);
+        .type(d3.annotationLabel)
+        .annotations([toadd_Annotation]);
 
     svg.append("g")
         .attr("class", "annotation-group")
