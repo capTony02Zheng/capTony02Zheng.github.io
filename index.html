@@ -44,12 +44,7 @@
 // d3 annotationLabel usage
 const type = d3.annotationLabel;
 
-const allAnnotations = [
-    { note: { label: "Annotation 1", bgPadding: 10, title: "Title 1" }, data: { date: new Date("2020-01-01"), value: 58600000 }, className: "show-bg", dy: 40, dx: 0 },
-    { note: { label: "Annotation 2", bgPadding: 10, title: "Title 2" }, data: { date: new Date("2020-04-01"), value: 54200000 }, className: "show-bg", dy: 40, dx: 0 },
-    { note: { label: "Annotation 3", bgPadding: 10, title: "Title 3" }, data: { date: new Date("2020-07-01"), value: 80400000 }, className: "show-bg", dy: 40, dx: 0 }
-    // Add more annotations as needed
-];
+
 
 // Define the dimensions of the SVG container
 const margin = { top: 20, right: 200, bottom: 30, left: 50},
@@ -91,6 +86,14 @@ const color = d3.scaleOrdinal(d3.schemeCategory10);
 let currentBrandIndex = 0;
 let brands;
 let num_of_sel;
+
+// annotation
+const allAnnotations = [
+    { note: { label: "Annotation 1", bgPadding: 10, title: "Title 1" }, data: { date: parseDate("2020YQ1"), value: 58600000 }, className: "show-bg", dy: 40, dx: 0 },
+    { note: { label: "Annotation 2", bgPadding: 10, title: "Title 2" }, data: { date: parseDate("2020YQ2"), value: 54200000 }, className: "show-bg", dy: 40, dx: 0 },
+    { note: { label: "Annotation 3", bgPadding: 10, title: "Title 3" }, data: { date: parseDate("2020YQ3"), value: 80400000 }, className: "show-bg", dy: 40, dx: 0 }
+    // Add more annotations as needed
+];
 
 // Load the CSV data
 d3.csv("sales.csv").then(data => {
@@ -238,8 +241,7 @@ function updateChart(index) {
         .text(brand.id);
 
     // Add annotations
-    // Extract the third annotation (index 2)
-    const toadd_Annotation = allAnnotations[2];
+    const toadd_Annotation = allAnnotations[1];
 
     // Create and add the third annotation
     const makeAnnotations = d3.annotation()
