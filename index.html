@@ -21,14 +21,14 @@
     <div>Smartphone Shipments 2018-2020</div>
     <div class="button-container">
         <button id="prev">Previous</button>
-        <button id="0">1</button>
-        <button id="1">2</button>
-        <button id="2">3</button>
-        <button id="3">4</button>
-        <button id="4">5</button>
-        <button id="5">6</button>
-        <button id="6">7</button>
-        <button id="7">ALL</button>
+        <button id="b0">1</button>
+        <button id="b1">2</button>
+        <button id="b2">3</button>
+        <button id="b3">4</button>
+        <button id="b4">5</button>
+        <button id="b5">6</button>
+        <button id="b6">7</button>
+        <button id="b7">ALL</button>
         <button id="next">Next</button>
     </div>
     <div id="chart"></div>
@@ -114,9 +114,9 @@ d3.csv("sales.csv").then(data => {
     // Add event listeners for buttons
     d3.select("#prev").on("click", () => {
         currentBrandIndex = (currentBrandIndex - 0 + brands.length) % (brands.length+1);
+        console.log(currentBrandIndex);
         if(currentBrandIndex === 7) {
             updateChartall();
-            console.log("all showed")
         } else {
             updateChart(currentBrandIndex);
         }
@@ -124,6 +124,7 @@ d3.csv("sales.csv").then(data => {
 
     d3.select("#next").on("click", () => {
         currentBrandIndex = (currentBrandIndex + 2) % (brands.length+1);
+        console.log(currentBrandIndex);
         if(currentBrandIndex === 7) {
             updateChartall();
         } else {
@@ -131,35 +132,35 @@ d3.csv("sales.csv").then(data => {
         }
     });
 
-    d3.select("#0").on("click", () => {
+    d3.select("#b0").on("click", () => {
         currentBrandIndex = 0;
         updateChart(currentBrandIndex);
     });
-    d3.select("#1").on("click", () => {
+    d3.select("#b1").on("click", () => {
         currentBrandIndex = 1;
         updateChart(currentBrandIndex);
     });
-    d3.select("#2").on("click", () => {
+    d3.select("#b2").on("click", () => {
         currentBrandIndex = 2;
         updateChart(currentBrandIndex);
     });
-    d3.select("#3").on("click", () => {
+    d3.select("#b3").on("click", () => {
         currentBrandIndex = 3;
         updateChart(currentBrandIndex);
     });
-    d3.select("#4").on("click", () => {
+    d3.select("#b4").on("click", () => {
         currentBrandIndex = 4;
         updateChart(currentBrandIndex);
     });
-    d3.select("#5").on("click", () => {
+    d3.select("#b5").on("click", () => {
         currentBrandIndex = 5;
         updateChart(currentBrandIndex);
     });
-    d3.select("#6").on("click", () => {
+    d3.select("#b6").on("click", () => {
         currentBrandIndex = 6;
         updateChart(currentBrandIndex);
     });
-    d3.select("#7").on("click", () => {
+    d3.select("#b7").on("click", () => {
         currentBrandIndex = 7;
         updateChartall();
     });
