@@ -8,9 +8,19 @@
             fill: none;
             stroke-width: 1.5px;
         }
+        .button-container {
+            margin-bottom: 20px;
+        }
+        .button-container button {
+            margin-right: 5px;
+        }
     </style>
 </head>
 <body>
+    <div class="button-container">
+        <button id="prev">Previous</button>
+        <button id="next">Next</button>
+    </div>
     <div id="chart"></div>
 </body>
 <script type="module">
@@ -43,6 +53,9 @@ const line = d3.line()
 // Define the color scale
 const color = d3.scaleOrdinal(d3.schemeCategory10);
 
+let currentBrandIndex = 0;
+let brands;
+
 // Load the CSV data
 d3.csv("sales.csv").then(data => {
     // Format the data
@@ -56,7 +69,7 @@ d3.csv("sales.csv").then(data => {
         });
     });
 
-    const brands = keys.map(key => {
+    brands = keys.map(key => {
         return {
             id: key,
             values: data.map(d => {
@@ -72,6 +85,27 @@ d3.csv("sales.csv").then(data => {
         d3.max(brands, c => d3.max(c.values, d => d.value))
     ]);
 
+    // Initial render
+    updateChart(currentBrandIndex);
+
+    // Add event listeners for buttons
+    d3.select("#prev").on("click", () => {
+        currentBrandIndex = (currentBrandIndex - 1 + brands.length) % brands.length;
+        updateChart(currentBrandIndex);
+    });
+
+    d3.select("#next").on("click", () => {
+        currentBrandIndex = (currentBrandIndex + 1) % brands.length;
+        updateChart(currentBrandIndex);
+    });
+});
+
+// Function to update the chart
+function updateChart(index) {
+    svg.selectAll("*").remove();  // Clear the SVG
+
+    const brand = brands[index];
+
     // Add the X Axis
     svg.append("g")
         .attr("transform", "translate(0," + height + ")")
@@ -81,26 +115,23 @@ d3.csv("sales.csv").then(data => {
     svg.append("g")
         .call(d3.axisLeft(y));
 
-    // Add the lines
-    const brand = svg.selectAll(".brand")
-        .data(brands)
-        .enter().append("g")
-        .attr("class", "brand");
-
-    brand.append("path")
+    // Add the line
+    svg.append("path")
+        .datum(brand.values)
         .attr("class", "line")
-        .attr("d", d => line(d.values))
-        .style("stroke", d => color(d.id));
+        .attr("d", line)
+        .style("stroke", color(brand.id));
 
-    // Add the brand labels
-    brand.append("text")
-        .datum(d => ({ id: d.id, value: d.values[d.values.length - 1] }))
-        .attr("transform", d => "translate(" + x(d.value.date) + "," + y(d.value.value) + ")")
-        .attr("x", 3)
-        .attr("dy", "0.35em")
-        .style("font", "10px sans-serif")
-        .text(d => d.id);
-});
+    // Add the brand label
+    svg.append("text")
+        .attr("transform", "translate(" + (width - 60) + "," + y(brand.values[brand.values.length - 1].value) + ")")
+        .attr("x", 5)
+        .attr("dy", ".35em")
+        .style("font", "16px sans-serif")
+        .style("fill", color(brand.id))
+        .text(brand.id);
+}
 </script>
 </html>
+
 
