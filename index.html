@@ -46,15 +46,27 @@ const type = d3.annotationLabel;
 
 const annotations = [{
     note: {
-    label: "Longer text to show text wrapping",
-    bgPadding: 20,
-    title: "Annotations :)"
+        label: "Notable drop in Q2 2020",
+        bgPadding: 10,
+        title: "April 2020 Drop"
     },
-    data: { date: "18-Sep-09", close: 185.02 },
+    data: { date: new Date("2020-04-01"), value: 54200000 },
     className: "show-bg",
-    dy: 137,
-    dx: 162
-}];
+    dy: -50,  // Move annotation up
+    dx: 0     // No horizontal offset
+    },
+    {
+    note: {
+        label: "test",
+        bgPadding: 10,
+        title: "April 2020 Drop"
+    },
+    data: { date: new Date("2020-04-01"), value: 54200000 },
+    className: "show-bg",
+    dy: -50,  // Move annotation up
+    dx: 0     // No horizontal offset
+    },
+];
 
 // Define the dimensions of the SVG container
 const margin = { top: 20, right: 200, bottom: 30, left: 50},
@@ -245,7 +257,7 @@ function updateChart(index) {
     // Add annotations
     const makeAnnotations = d3.annotation()
         .type(type)
-        .annotations(annotations);
+        .annotations(annotations[1]);
 
     svg.append("g")
         .attr("class", "annotation-group")
