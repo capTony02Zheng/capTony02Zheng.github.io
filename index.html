@@ -113,7 +113,7 @@ d3.csv("sales.csv").then(data => {
 
     // Add event listeners for buttons
     d3.select("#prev").on("click", () => {
-        currentBrandIndex = (currentBrandIndex - 1 + brands.length) % (brands.length);
+        currentBrandIndex = (currentBrandIndex - 0 + brands.length) % (brands.length+1);
         if(currentBrandIndex === 7) {
             updateChartall();
             console.log("all showed")
@@ -123,12 +123,45 @@ d3.csv("sales.csv").then(data => {
     });
 
     d3.select("#next").on("click", () => {
-        currentBrandIndex = (currentBrandIndex + 1) % (brands.length);
+        currentBrandIndex = (currentBrandIndex + 2) % (brands.length+1);
         if(currentBrandIndex === 7) {
             updateChartall();
         } else {
             updateChart(currentBrandIndex);
         }
+    });
+
+    d3.select("#0").on("click", () => {
+        currentBrandIndex = 0;
+        updateChart(currentBrandIndex);
+    });
+    d3.select("#1").on("click", () => {
+        currentBrandIndex = 1;
+        updateChart(currentBrandIndex);
+    });
+    d3.select("#2").on("click", () => {
+        currentBrandIndex = 2;
+        updateChart(currentBrandIndex);
+    });
+    d3.select("#3").on("click", () => {
+        currentBrandIndex = 3;
+        updateChart(currentBrandIndex);
+    });
+    d3.select("#4").on("click", () => {
+        currentBrandIndex = 4;
+        updateChart(currentBrandIndex);
+    });
+    d3.select("#5").on("click", () => {
+        currentBrandIndex = 5;
+        updateChart(currentBrandIndex);
+    });
+    d3.select("#6").on("click", () => {
+        currentBrandIndex = 6;
+        updateChart(currentBrandIndex);
+    });
+    d3.select("#7").on("click", () => {
+        currentBrandIndex = 7;
+        updateChartall();
     });
 });
 
@@ -192,21 +225,21 @@ function updateChart(index) {
 function updateChartall() {
     svg.selectAll("*").remove();  // Clear the SVG
 
-    for (let i = 0; i < 7; i++) {
-        const brand = brands[i];
-
-        // Add the X Axis
-        svg.append("g")
+    // Add the X Axis
+    svg.append("g")
             .attr("transform", "translate(0," + height + ")")
             .call(d3.axisBottom(x));
 
-        // Add the Y Axis
-        svg.append("g")
-            .call(d3.axisLeft(y).tickFormat(d => {
-                // Format the tick labels in millions
-                return (d / 1000000).toFixed(0) + 'M';
-            })
-        );
+    // Add the Y Axis
+    svg.append("g")
+        .call(d3.axisLeft(y).tickFormat(d => {
+            // Format the tick labels in millions
+            return (d / 1000000).toFixed(0) + 'M';
+        })
+    );
+
+    for (let i = 0; i < 7; i++) {
+        const brand = brands[i];
 
         // Add the line
         svg.append("path")
@@ -246,8 +279,6 @@ function updateChartall() {
             .text(brand.id);
     }
 }
-
-
 </script>
 </html>
 
