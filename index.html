@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- capTony02Zheng.github.io -->
     <meta charset="UTF-8">
     <title>Smartphone Shipments</title>
     <style>
@@ -24,6 +25,8 @@
     </div>
     <div id="chart"></div>
 </body>
+
+
 <script type="module">
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
@@ -44,7 +47,7 @@ const parseDate = d => {
     const year = +d.substring(0, 4);
     const quarter = +d.substring(6, 7);
     return new Date(year, (quarter - 1) * 3);
-    console.log("date is, ", year, quarter);
+    // console.log("date is, ", year, quarter);
 };
 
 // Set the ranges
@@ -87,6 +90,7 @@ d3.csv("sales.csv").then(data => {
     // Scale the range of the data
     x.domain(d3.extent(data, d => d.date));
     y.domain([
+
         d3.min(brands, c => d3.min(c.values, d => d.value)),
         d3.max(brands, c => d3.max(c.values, d => d.value))
     ]);
@@ -111,6 +115,11 @@ function updateChart(index) {
     svg.selectAll("*").remove();  // Clear the SVG
 
     const brand = brands[index];
+
+    y.domain([
+        d3.min(brand.values, d => d.value),
+        d3.max(brand.values, d => d.value)
+    ]);
 
     // Add the X Axis
     svg.append("g")
