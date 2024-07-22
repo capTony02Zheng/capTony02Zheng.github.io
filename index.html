@@ -77,6 +77,7 @@ const color = d3.scaleOrdinal(d3.schemeCategory10);
 
 let currentBrandIndex = 0;
 let brands;
+let num_of_sel;
 
 // Load the CSV data
 d3.csv("sales.csv").then(data => {
@@ -112,8 +113,9 @@ d3.csv("sales.csv").then(data => {
     updateChart(currentBrandIndex);
 
     // Add event listeners for buttons
+    num_of_sel = brands.length + 1;
     d3.select("#prev").on("click", () => {
-        currentBrandIndex = (currentBrandIndex - 0 + brands.length) % (brands.length+1);
+        currentBrandIndex = (currentBrandIndex - 1 + num_of_sel) % (num_of_sel);
         console.log(currentBrandIndex);
         if(currentBrandIndex === 7) {
             updateChartall();
@@ -123,7 +125,7 @@ d3.csv("sales.csv").then(data => {
     });
 
     d3.select("#next").on("click", () => {
-        currentBrandIndex = (currentBrandIndex + 2) % (brands.length+1);
+        currentBrandIndex = (currentBrandIndex + 1) % (num_of_sel);
         console.log(currentBrandIndex);
         if(currentBrandIndex === 7) {
             updateChartall();
