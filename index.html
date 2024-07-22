@@ -172,6 +172,62 @@ function updateChart(index) {
         .text(brand.id);
 }
 
+function updateChart2(index) {
+    svg.selectAll("*").remove();  // Clear the SVG
+
+    const brand = brands[index];
+
+    // Add the X Axis
+    svg.append("g")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(x));
+
+    // Add the Y Axis
+    svg.append("g")
+        .call(d3.axisLeft(y).tickFormat(d => {
+            // Format the tick labels in millions
+            return (d / 1000000).toFixed(0) + 'M';
+        })
+    );
+
+    // Add the line
+    svg.append("path")
+        .datum(brand.values)
+        .attr("class", "line")
+        .attr("d", line)
+        .style("stroke", color(brand.id));
+
+    // Add the dot
+    svg.selectAll(".dot")
+        .data(brand.values)
+        .enter().append("circle")
+        .attr("class", "dot")
+        .attr("r", 4)
+        .attr("cx", d => x(d.date))
+        .attr("cy", d => y(d.value))
+        .style("fill", color(brand.id))
+        .style("stroke", "black")
+        .style("stroke-width", 1)
+        .on("mouseover", function(event, d) {
+            tooltip.transition().duration(200).style("opacity", .9);
+            tooltip.html(`Date: ${d.date.toLocaleDateString()}<br>Value: ${(d.value / 1000000).toFixed(2)}M`)
+                .style("left", (event.pageX + 5) + "px")
+                .style("top", (event.pageY - 28) + "px");
+        })
+        .on("mouseout", function(d) {
+            tooltip.transition().duration(500).style("opacity", 0);
+        });
+
+    // Add the brand label
+    svg.append("text")
+        .attr("transform", "translate(" + (width) + "," + y(brand.values[brand.values.length - 1].value) + ")")
+        .attr("x", 5)
+        .attr("dy", ".35em")
+        .style("font", "16px sans-serif")
+        .style("fill", color(brand.id))
+        .text(brand.id);
+}
+
 
 </script>
 </html>
