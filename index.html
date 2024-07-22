@@ -31,7 +31,7 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
 // Define the dimensions of the SVG container
-const margin = { top: 20, right: 20, bottom: 30, left: 500 },
+const margin = { top: 20, right: 20, bottom: 30, left: 250 },
       width = 960 - margin.left - margin.right,
       height = 500 - margin.top - margin.bottom;
 
@@ -123,7 +123,9 @@ function updateChart(index) {
 
     // Add the Y Axis
     svg.append("g")
-        .call(d3.axisLeft(y));
+        .call(d3.axisLeft(y).ticks(6).tickFormat(d => {
+            return (d / 1000000).toFixed(0) + 'M';
+        }));
 
     // Add the line
     svg.append("path")
