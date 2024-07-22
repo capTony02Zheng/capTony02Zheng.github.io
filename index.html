@@ -89,11 +89,46 @@ let num_of_sel;
 
 // annotation
 const allAnnotations = [
-    { note: { label: "Annotation 1", bgPadding: 10, title: "Title 1" }, data: { date: parseDate("2020YQ1"), value: 58600000 }, className: "show-bg", dy: 40, dx: 0 },
-    { note: { label: "Annotation 2", bgPadding: 10, title: "Title 2" }, data: { date: parseDate("2020YQ2"), value: 54200000 }, className: "show-bg", dy: 40, dx: 0 },
-    { note: { label: "Annotation 3", bgPadding: 10, title: "Title 3" }, data: { date: parseDate("2020YQ3"), value: 80400000 }, className: "show-bg", dy: 40, dx: 0 }
-    // Add more annotations as needed
-];
+        {
+            note: {
+                label: "Annotation 1",
+                bgPadding: 10,
+                title: "Title 1"
+            },
+            // Direct x and y coordinates
+            x: x(parseDate("2020YQ1")), // X-coordinate
+            y: y(58600000),             // Y-coordinate
+            className: "show-bg",
+            dy: -30,                    // Adjust the vertical offset as needed
+            dx: 0                       // Adjust the horizontal offset as needed
+        },
+
+        {
+            note: {
+                label: "Annotation 2",
+                bgPadding: 10,
+                title: "Title 2"
+            },
+            x: x(parseDate("2020YQ2")), // X-coordinate
+            y: y(54200000),             // Y-coordinate
+            className: "show-bg",
+            dy: -30,                    // Adjust the vertical offset as needed
+            dx: 0                       // Adjust the horizontal offset as needed
+        },
+        
+        {
+            note: {
+                label: "Annotation 3",
+                bgPadding: 10,
+                title: "Title 3"
+            },
+            x: x(parseDate("2020YQ3")), // X-coordinate
+            y: y(80400000),             // Y-coordinate
+            className: "show-bg",
+            dy: -30,                    // Adjust the vertical offset as needed
+            dx: 0                       // Adjust the horizontal offset as needed
+        }
+    ];
 
 // Load the CSV data
 d3.csv("sales.csv").then(data => {
@@ -241,9 +276,10 @@ function updateChart(index) {
         .text(brand.id);
 
     // Add annotations
-    const toadd_Annotation = allAnnotations[1];
+    svg.selectAll(".annotation-group").remove(); // Clear previous annotations
 
-    // Create and add the third annotation
+    const toadd_Annotation = allAnnotations[1]; // Example annotation
+
     const makeAnnotations = d3.annotation()
         .type(d3.annotationLabel)
         .annotations([toadd_Annotation]);
