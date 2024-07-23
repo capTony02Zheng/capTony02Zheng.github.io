@@ -299,7 +299,15 @@ function updateChart(index) {
         .datum(brand.values)
         .attr("class", "line")
         .attr("d", line)
-        .style("stroke", color(brand.id));
+        .style("stroke", color(brand.id))
+        .transition()          // Start the transition
+        .duration(2000)        // Set the duration of the transition (in milliseconds)
+        .attrTween("d", function(d) {
+            const interpolate = d3.scaleQuantize().domain([0, 1]).range(d3.range(1, brand.values.length + 1));
+            return function(t) {
+                return line(brand.values.slice(0, interpolate(t)));
+            };
+        });
 
     // Add the dot
     svg.selectAll(".dot")
@@ -368,7 +376,15 @@ function updateChartall() {
             .datum(brand.values)
             .attr("class", "line")
             .attr("d", line)
-            .style("stroke", color(brand.id));
+            .style("stroke", color(brand.id))
+            .transition()          // Start the transition
+            .duration(2000)        // Set the duration of the transition (in milliseconds)
+            .attrTween("d", function(d) {
+                const interpolate = d3.scaleQuantize().domain([0, 1]).range(d3.range(1, brand.values.length + 1));
+                return function(t) {
+                    return line(brand.values.slice(0, interpolate(t)));
+                };
+            });
 
         // Add the brand label
         svg.append("text")
